@@ -51,4 +51,8 @@
   .btn-danger i {
     margin-right: 8px;  /* Espacio entre el icono y el texto */
   }
-  
+  .comentarios{
+    background-color: #0056b3;
+    border-radius: 3px;
+    border:solid black
+  }

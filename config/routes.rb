@@ -1,14 +1,17 @@
 Rails.application.routes.draw do
-  resources :publications
+  # Configura Devise para manejar la autenticación de usuarios fuera del bloque de publicaciones
   devise_for :users
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  
+  # Define las rutas para las publicaciones y anida user_comments dentro de publications
+  resources :publications do
+    resources :user_comments, only: [:create]
+  end
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
+  # Ruta para verificar el estado de salud de la aplicación
   get "up" => "rails/health#show", as: :rails_health_check
-  post '/reactions', to: 'reactions#user_reaction', as: 'user_reaction'
-  get '/my_reactions', to: 'reactions#publication_with_reactions', as: 'my_reactions'
 
-  # Defines the root path route ("/")
-   root "publications#index"
+  # Define la ruta raíz
+  root "publications#index"
 end
+
+

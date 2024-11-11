@@ -70,3 +70,14 @@ class PublicationsController < ApplicationController
       params.require(:publication).permit(:title, :content, :user_id)
     end
 end
+def like
+  reaction = current_user.reactions.find_or_initialize_by(publication_id: params[:id])
+  reaction.like = true
+  reaction.save
+end
+
+def dislike
+  reaction = current_user.reactions.find_or_initialize_by(publication_id: params[:id])
+  reaction.like = false
+  reaction.save
+end
