@@ -1,0 +1,40 @@
+<p style="color: green"><%= notice %></p>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="content-frame d-flex justify-content-between" style="border: 1px solid #ccc; padding: 20px; border-radius: 8px;">
+        <!-- Contenido de la publicación -->
+        <div>
+          <p><strong>Title:</strong> <%= @publication.title %></p>
+          <p><strong>Content:</strong> <%= @publication.content %></p>
+          <p><strong>Creado por:</strong> <%= @publication.user.name %></p>
+        </div>
+
+        <!-- Iconos  -->
+        <div class="action-icons d-flex flex-column align-items-center">
+          <!-- Editar publicación -->
+          <%= link_to edit_publication_path(@publication) do %>
+            <i class="fas fa-edit fa-2x" title="Edit"></i>
+          <% end %>
+
+          <!-- Volver a publicaciones -->
+          <%= link_to publications_path do %>
+            <i class="fas fa-arrow-left fa-2x" title="Back"></i>
+          <% end %>
+
+          
+
+          <!-- Botón de eliminación -->
+          <%= button_to publication_path(@publication), method: :delete, data: { confirm: 'Are you sure you want to delete this publication?' }, class: 'btn btn-danger btn-sm d-flex align-items-center justify-content-center shadow-lg transition-all' do %>
+            <i class="fas fa-trash-alt mr-2"></i> Delete
+          <% end %>
+        
+        </div>
+
+        
+      </div>
+     
+    </div>
+  </div>
+</div>
