@@ -7,3 +7,19 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+# db/seeds.rb
+# 4.times do
+#     publication = Publication.create!(
+#       title: Faker::Book.title,
+#       content: Faker::Lorem.paragraph
+#     )
+  
+#     # Crear comentarios ficticios para cada publicación
+# 5.times do
+#       publication.comments.create!(
+#         author: Faker::Name.name,
+#         body: Faker::Lorem.sentence
+#       )
+#     end
+#   end
+  
