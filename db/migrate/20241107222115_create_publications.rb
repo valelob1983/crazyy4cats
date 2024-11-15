@@ -5,7 +5,10 @@ class CreatePublications < ActiveRecord::Migration[7.1]
       t.text :content
       t.references :user, null: false, foreign_key: true
 
-      t.timestamps
+      t.timestamps    
+      add_column :comments, :likes_count, :integer, default: 0
+      add_column :comments, :dislikes_count, :integer, default: 0
+
     end
   end
 end

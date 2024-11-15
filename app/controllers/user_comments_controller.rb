@@ -12,6 +12,18 @@ class UserCommentsController < ApplicationController
     end
   end
 
+  def like
+    comment = UserComment.find(params[:id])
+    comment.increment!(:likes_count)
+    redirect_back(fallback_location: root_path)
+  end
+
+  def dislike
+    comment = UserComment.find(params[:id])
+    comment.increment!(:dislikes_count)
+    redirect_back(fallback_location: root_path)
+  end
+
   private
 
   def set_publication
@@ -21,5 +33,4 @@ class UserCommentsController < ApplicationController
   def comment_params
     params.require(:user_comment).permit(:content)
   end
-
 end

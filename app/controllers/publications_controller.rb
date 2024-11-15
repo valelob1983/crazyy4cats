@@ -1,8 +1,42 @@
 class PublicationsController < ApplicationController
-  before_action :set_publication, only: %i[ show edit update destroy ]
+  before_action :set_publication, only: %i[show edit update destroy like dislike]
   before_action :authenticate_user!, except: [:index, :show, :home]
   
   def home
+  end
+
+  # Acción para dar like a la publicación
+  def like
+    @like = @publication.likes.find_or_initialize_by(user: current_user)
+
+    # Si el usuario ya ha dado un like (1), lo elimina
+    if @like.like_type == 1
+      @like.destroy
+      message = "Like removed."
+    else
+      # Si el usuario ya ha dado un dislike (-1), se cambia a like (1)
+      @like.update(like_type: 1)
+      message = "Liked successfully."
+    end
+
+    redirect_to @publication, notice: message
+  end
+
+  # Acción para dar dislike a la publicación
+  def dislike
+    @like = @publication.likes.find_or_initialize_by(user: current_user)
+
+    # Si el usuario ya ha dado un dislike (-1), lo elimina
+    if @like.like_type == -1
+      @like.destroy
+      message = "Dislike removed."
+    else
+      # Si el usuario ya ha dado un like (1), se cambia a dislike (-1)
+      @like.update(like_type: -1)
+      message = "Disliked successfully."
+    end
+
+    redirect_to @publication, notice: message
   end
 
   # GET /publications or /publications.json
@@ -27,7 +61,7 @@ class PublicationsController < ApplicationController
   # POST /publications or /publications.json
   def create
     @publication = current_user.publications.build(publication_params)
-  
+
     respond_to do |format|
       if @publication.save
         format.html { redirect_to @publication, notice: "Publication was successfully created." }
@@ -73,14 +107,4 @@ class PublicationsController < ApplicationController
       params.require(:publication).permit(:title, :content, :user_id)
     end
 end
-def like
-  reaction = current_user.reactions.find_or_initialize_by(publication_id: params[:id])
-  reaction.like = true
-  reaction.save
-end
 
-def dislike
-  reaction = current_user.reactions.find_or_initialize_by(publication_id: params[:id])
-  reaction.like = false
-  reaction.save
-end

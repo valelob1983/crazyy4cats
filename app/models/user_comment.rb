@@ -1,4 +1,6 @@
 class UserComment < ApplicationRecord
-    belongs_to :user, optional: true
-    belongs_to :publication
-  end
+  belongs_to :publication
+  belongs_to :user, optional: true
+  has_many :reactions, dependent: :destroy
+ 
+end
